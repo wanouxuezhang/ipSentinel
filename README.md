@@ -60,7 +60,6 @@
 | 变量名称 | 含义 | 示例值 |
 | --- | --- | --- |
 | `TITLE` | 网页标题 | IP SENTINEL |
-| `GITHUB` | GitHub 链接 (留空不显示) | [https://github.com/wanouxuezhang/ipip](https://github.com/wanouxuezhang/ipip) |
 | `NAME` | 英文名称 (显示在副标题) | DollSenior |
 | `NAMECN` | 中文名称 (显示在副标题) | 玩偶学长 |
 | `SHORT` | 英文简称 (连接状态标签) | DollSenior |
