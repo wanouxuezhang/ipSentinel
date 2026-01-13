@@ -1,7 +1,7 @@
 # IP Sentinel (IP 哨兵) - Cloudflare Worker
 **IP Sentinel** 是一个运行在 Cloudflare Workers 上的单文件网络检测工具。它集成了 IP 查询、网络连通性测试、WebRTC 隐私检测、风险评分以及 PWA 支持，界面采用现代化的 React + Tailwind CSS 构建。
 
-**IP Sentinel** 演示地址： [Cloudflare Dashboard](https://ip.wanouge.com)。
+** 演示地址： [IP Sentinel](https://ip.wanouge.com)。
 
 ## ✨ 主要特性
 
@@ -81,7 +81,13 @@
 * 本项目集成的 `request.cf` 属性依赖于 Cloudflare 的 IP 数据库，位置信息仅供参考。
 * 项目源码中包含的第三方 API 服务与其拥有者无关，请遵守各 API 的使用条款。
 
-## 👏 致谢
+## 🤝 贡献与支持
 
+如果你喜欢这个项目，欢迎：
+* 在 GitHub 上给我点一颗 **Star** ⭐
+* 提交 Issue 或 Pull Request
+* 分享给你的朋友
+  
 * 原作者/定制版标识: **DollBrother (玩偶学长)**
 * UI 设计灵感来源于开源社区优秀的 IP 工具箱项目。
+
