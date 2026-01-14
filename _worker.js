@@ -1,6 +1,7 @@
 /**
  * IP SENTINEL - Cloudflare Worker
  * 玩偶学长 (DollSenior) 定制版
+ * 默认显示英文，如修改中文界面，请搜索 const [lang, setLang] = useState('en'); 把zh改为en即可
  */
 
 export default {
@@ -826,7 +827,7 @@ function renderHtml(initData, config) {
 
       const App = () => {
         const [data, setData] = useState(window.CF_DATA || null);
-        const [lang, setLang] = useState('zh');
+        const [lang, setLang] = useState('cn');
         const [hostname, setHostname] = useState('Scanning...');
         const [riskData, setRiskData] = useState(null);
         const t = TRANSLATIONS[lang];
