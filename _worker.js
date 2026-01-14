@@ -3,7 +3,6 @@
  * 玩偶学长 (DollSenior) 定制版
  * 默认显示英文，如修改中文界面，请搜索 const [lang, setLang] = useState('en'); 把zh改为en即可
  */
-
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -78,7 +77,6 @@ export default {
 };
 
 function renderHtml(initData, config) {
-  // 注意：HTML 中的反引号 ` 和 ${} 必须转义
   return `
 <!DOCTYPE html>
 <html lang="zh-CN" class="dark">
@@ -156,11 +154,12 @@ function renderHtml(initData, config) {
           viewLargeMap: "查看大图", webrtc: "WebRTC 隐私", webrtcLeak: "泄露", webrtcSafe: "安全",
           device: "设备信息", browser: "浏览器", os: "系统",
           starMe: "在 GitHub 点赞",
-          // 新增胶囊属性
           type: "IP类型", idc: "IDC机房", broadband: "家庭宽带",
           native: "原生IP", broadcast: "广播IP",
           shared: "共享人数", multi: "多人", low: "1-10",
-          riskScore: "IP评分"
+          riskScore: "IP评分",
+          report: "体检报告",
+          localTime: "本机时间", ipTime: "IP 时间"
         },
         en: {
           title: "IP SENTINEL", 
@@ -178,11 +177,12 @@ function renderHtml(initData, config) {
           viewLargeMap: "View Full Map", webrtc: "WebRTC Privacy", webrtcLeak: "Leak Detected", webrtcSafe: "Safe",
           device: "Device Info", browser: "Browser", os: "OS",
           starMe: "Star on GitHub",
-          // Capsules
           type: "Type", idc: "Data Center", broadband: "Residential",
           native: "Native IP", broadcast: "Broadcast",
           shared: "Users", multi: "High", low: "1-10",
-          riskScore: "IP Score"
+          riskScore: "IP Score",
+          report: "IP Report",
+          localTime: "Local Time", ipTime: "IP Time"
         }
       };
 
@@ -198,6 +198,7 @@ function renderHtml(initData, config) {
         External: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>,
         Laptop: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="2" y1="20" x2="22" y2="20"/></svg>,
         Smartphone: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>,
+        Clock: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
         China: (props) => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24" height="24" fill="currentColor" {...props}><path d="M0 0h512v512H0z" fill="#ee1c25"/><path d="M127 125l-21.8-7.3-10.7 20.2-10.7-20.2-21.8 7.3 13.5-18.7-1.1-22.3 17.5 14.8 22.3 1.1 18.7-13.5zM224 160l-15.6-5.2-7.6 14.4-7.6-14.4-15.6 5.2 9.7-13.4-.8-15.9 12.5 10.6 15.9.8 13.4-9.7zM240 208l-15.6-5.2-7.6 14.4-7.6-14.4-15.6 5.2 9.7-13.4-.8-15.9 12.5 10.6 15.9.8 13.4-9.7zM208 256l-15.6-5.2-7.6 14.4-7.6-14.4-15.6 5.2 9.7-13.4-.8-15.9 12.5 10.6 15.9.8 13.4-9.7zM176 304l-15.6-5.2-7.6 14.4-7.6-14.4-15.6 5.2 9.7-13.4-.8-15.9 12.5 10.6 15.9.8 13.4-9.7z"/></svg>,
         Google: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" {...props}><path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .533 5.347.533 12S5.867 24 12.48 24c3.44 0 6.04-1.133 8.133-3.293 2.133-2.133 2.773-5.12 2.773-7.573 0-.747-.067-1.467-.187-2.213h-10.72z"/></svg>,
         Youtube: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" {...props}><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>,
@@ -208,9 +209,7 @@ function renderHtml(initData, config) {
         Baidu: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" {...props}><path d="M12 14c-2.5 0-4.5 1.5-4.5 3.5S9.5 21 12 21s4.5-1.5 4.5-3.5S14.5 14 12 14zM5.5 8.5c-1.5 0-2.5 1.2-2.5 2.5s1 2.5 2.5 2.5 2.5-1.2 2.5-2.5-1-2.5-2.5-2.5zM9.5 5.5c-1.5 0-2.5 1.2-2.5 2.5s1 2.5 2.5 2.5 2.5-1.2 2.5-2.5-1-2.5-2.5-2.5zM14.5 5.5c-1.5 0-2.5 1.2-2.5 2.5s1 2.5 2.5 2.5 2.5-1.2 2.5-2.5-1-2.5-2.5-2.5zM18.5 8.5c-1.5 0-2.5 1.2-2.5 2.5s1 2.5 2.5 2.5 2.5-1.2 2.5-2.5-1-2.5-2.5-2.5z"/></svg>,
         Github: (props) => <svg viewBox="0 0 24 24" fill="currentColor" {...props}><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>,
         Telegram: (props) => <svg viewBox="0 0 24 24" fill="currentColor" {...props}><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 11.944 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>,
-        Bilibili: (props) => <svg viewBox="0 0 24 24" fill="currentColor" {...props}><path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.758v4.742c-.036 1.509-.556 2.769-1.56 3.766-1.004.996-2.264 1.52-3.773 1.574h-13.334c-1.509-.054-2.769-.578-3.773-1.574-1.004-.997-1.524-2.257-1.56-3.766v-4.742c.036-1.509.556-2.763 1.56-3.758 1.004-.996 2.264-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373l2.894 2.76h4.614l2.88-2.76c.267-.249.573-.373.92-.373.347 0 .653.124.92.373l.027.027c.249.249.373.551.373.907 0 .355-.124.657-.373.906l-1.174 1.12zm-11.76 9.107c1.44 0 1.44-2.027 0-2.027-1.44 0-1.44 2.027 0 2.027zm8.04 0c1.44 0 1.44-2.027 0-2.027-1.44 0-1.44 2.027 0 2.027z"/></svg>,
-        WeChat: (props) => <svg viewBox="0 0 24 24" fill="currentColor" {...props}><path d="M2.016 12.388c0-3.554 3.39-6.438 7.576-6.438 4.185 0 7.575 2.884 7.575 6.438 0 3.555-3.39 6.439-7.575 6.439-.839 0-1.646-.117-2.406-.33l-2.65 1.532.538-2.353c-1.884-1.374-3.058-3.392-3.058-5.288z"/><path d="M15.558 13.855c0-2.518 2.565-4.561 5.729-4.561 3.164 0 5.73 2.043 5.73 4.561 0 2.519-2.566 4.561-5.73 4.561-.594 0-1.166-.075-1.704-.214l-1.877 1.085.381-1.666c-1.519-.872-2.529-2.29-2.529-3.766z"/></svg>,
-        Douyin: (props) => <svg viewBox="0 0 24 24" fill="currentColor" {...props}><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>,
+        Report: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
       };
 
       const copyText = (text, onSuccess) => {
@@ -243,6 +242,42 @@ function renderHtml(initData, config) {
         return { os, browser };
       };
 
+      // === 核心逻辑：计算 IP 评分 ===
+      const calculateRiskScore = (data, riskData) => {
+         if (!riskData) return null; 
+         
+         let s = 100;
+         const { is_vpn, is_proxy, is_tor, is_datacenter, is_abuser, is_bot, risk_score } = riskData;
+         
+         // A. IP 熵值波动
+         try {
+             const ipParts = data.ip.split(/[.:]/);
+             const lastSegment = parseInt(ipParts[ipParts.length - 1], 16) || 0;
+             s -= (lastSegment % 4); 
+         } catch (e) {}
+
+         // B. 关键风险扣分
+         if (is_vpn) s -= 30;
+         if (is_proxy) s -= 30;
+         if (is_tor) s -= 50;
+         if (is_bot) s -= 20;
+         if (is_abuser) s -= 40;
+
+         // C. 类型判定
+         if (is_datacenter) s -= 25; 
+         else s += 1; 
+
+         // D. 动态风险值映射
+         if (typeof risk_score === 'number') s -= Math.round(risk_score);
+
+         // E. 地理位置/原生判定
+         const asnCountry = riskData.asn && riskData.asn.country;
+         const cfCountry = data.country;
+         if (asnCountry && cfCountry && asnCountry !== cfCountry) s -= 20; 
+
+         return Math.min(100, Math.max(0, s));
+      };
+
       const InfoCard = ({ title, value, icon: Icon, subValue, delay, color }) => (
         <div className="glass p-3 rounded-xl flex flex-col justify-between h-full hover:border-slate-600 transition-all duration-300 border border-slate-800 gap-1">
           <div className="flex justify-between items-start">
@@ -258,23 +293,43 @@ function renderHtml(initData, config) {
         </div>
       );
 
-      const AttributeItem = ({ label, value, colorClass, score }) => (
-        <div className="flex items-center text-xs h-6 overflow-hidden rounded border border-slate-700/50">
+      const AttributeItem = ({ label, value, colorClass, score }) => {
+        const [displayScore, setDisplayScore] = useState(0);
+
+        useEffect(() => {
+          if (score !== undefined && typeof score === 'number') {
+            let start = 0;
+            const end = score;
+            const duration = 1000;
+            const increment = end / (duration / 16); 
+            
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= end) {
+                    setDisplayScore(end);
+                    clearInterval(timer);
+                } else {
+                    setDisplayScore(Math.floor(start));
+                }
+            }, 16);
+            return () => clearInterval(timer);
+          }
+        }, [score]);
+
+        return (
+          <div className="flex items-center text-xs h-6 overflow-hidden rounded border border-slate-700/50">
             <div className="px-2 h-full flex items-center bg-slate-800 text-slate-400 font-medium whitespace-nowrap border-r border-slate-700/50 z-10">
                 {label}
             </div>
-            {/* 如果传入了 score，则渲染进度条模式，否则保持全填充模式 */}
             <div className="relative flex-grow h-full bg-slate-900/50 flex items-center justify-center">
                 {score !== undefined ? (
                     <>
-                        {/* 动态进度条背景 */}
                         <div 
                             className={\`absolute left-0 top-0 h-full \${colorClass} opacity-80 transition-all duration-1000 ease-out\`} 
                             style={{ width: \`\${score}%\` }}
                         ></div>
-                        {/* 文字绝对居中，确保在进度条上方 */}
-                        <div className="relative z-10 text-white font-bold drop-shadow-md px-1">
-                            {value}
+                        <div className="relative z-10 text-white font-bold drop-shadow-md px-1 font-mono">
+                            {displayScore}
                         </div>
                     </>
                 ) : (
@@ -283,8 +338,9 @@ function renderHtml(initData, config) {
                     </div>
                 )}
             </div>
-        </div>
-      );
+          </div>
+        );
+      };
 
       const WebRTCCard = ({ t }) => {
          const [ip, setIp] = useState(null);
@@ -434,31 +490,17 @@ function renderHtml(initData, config) {
             return trimmed.replace(/(\d+)$/, '***');
         };
         
-        // === 核心数据处理 (回归纯净版评分算法) ===
-        // 从 riskData 提取布尔值
-        const { is_vpn, is_proxy, is_tor, is_datacenter, is_abuser, is_bot } = riskData || {};
+        const { is_datacenter, is_vpn, is_proxy, is_tor } = riskData || {};
         
         // 1. IP 类型
         const ipType = is_datacenter ? t.idc : t.broadband;
         const ipTypeColor = is_datacenter ? "bg-red-500" : "bg-green-500";
 
-        // 2. IP 评分 (原生算法：100分起扣)
-        const calculateScore = () => {
-           if (!riskData) return null; // 数据未加载时返回 null
-           let s = 100;
-           if (is_vpn) s -= 20;
-           if (is_proxy) s -= 20;
-           if (is_tor) s -= 40;
-           if (is_datacenter) s -= 15;
-           if (is_abuser) s -= 30;
-           if (is_bot) s -= 20;
-           return Math.max(0, s);
-        };
-        const score = calculateScore();
+        // 2. 调用独立评分函数
+        const score = calculateRiskScore(data, riskData);
         
-        // 评分颜色逻辑：>80 绿色, >50 黄色, 其他 红色
         let scoreColor = "bg-red-500";
-        if (score > 80) scoreColor = "bg-green-500"; // 原版逻辑 neon-green
+        if (score > 80) scoreColor = "bg-green-500"; 
         else if (score > 50) scoreColor = "bg-yellow-500";
         
         // 3. 原生 IP 判断
@@ -478,9 +520,10 @@ function renderHtml(initData, config) {
             <div className="flex justify-between items-center mb-4 z-10 relative flex-shrink-0 flex-wrap gap-2">
                   <div className="flex items-center gap-2 flex-wrap">
                       <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-900/30 text-cyan-400 border border-cyan-800">{t.currentConnection}</span>
+                      
                       <div className="flex items-center gap-2 px-2 py-0.5 rounded bg-red-900/20 border border-red-900/30 text-[10px]">
                             <span className="text-red-400 font-bold flex items-center gap-1"><Icons.China className="w-3 h-3" /> {t.cnIp}:</span>
-                            <span className={"font-mono " + (domesticInfo.ip === "Loading..." ? "text-slate-500 animate-pulse" : "text-white")}>
+                            <span className={\`font-mono \${domesticInfo.ip === "Loading..." ? "text-slate-500 animate-pulse" : "text-white"}\`}>
                                 {domesticInfo.ip === "Loading..." ? t.checking : (isChinaHidden ? maskIp(domesticInfo.ip) : domesticInfo.ip)}
                             </span>
                             {domesticInfo.city && <span className="text-slate-400 ml-1 whitespace-nowrap">{isChinaHidden ? "******" : domesticInfo.city}</span>}
@@ -496,11 +539,13 @@ function renderHtml(initData, config) {
                             )}
                       </div>
                   </div>
-                  {!isCN && (
-                    <a href={"https://www.google.com/maps?q=" + data.lat + "," + data.lon} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[10px] text-slate-400 hover:text-white transition-colors ml-auto">
-                        {t.viewMap} <Icons.External className="w-2.5 h-2.5" />
-                    </a>
-                  )}
+                  <div className="flex items-center gap-2 ml-auto">
+                      {!isCN && (
+                        <a href={"https://www.google.com/maps?q=" + data.lat + "," + data.lon} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[10px] text-slate-400 hover:text-white transition-colors">
+                            {t.viewMap} <Icons.External className="w-2.5 h-2.5" />
+                        </a>
+                      )}
+                  </div>
             </div>
 
             {/* 中间：地图与主要信息 */}
@@ -556,7 +601,6 @@ function renderHtml(initData, config) {
                   {riskData ? (
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                         <AttributeItem label={t.type} value={ipType} colorClass={ipTypeColor} />
-                        {/* 修正了这一行，使用 t.score 来动态显示 "分" 或 "Score" */}
                         <AttributeItem 
                             label={t.riskScore} 
                             value={score !== null ? \`\${score} \${t.score}\` : "..."} 
@@ -741,7 +785,7 @@ function renderHtml(initData, config) {
                       });
                   } catch(err) {
                       if(source.includes('v6') && !isCN) {
-                          const res = await fetch("https://api6.ipify.org/?format=json", options);
+                          const res = await fetch("https://api6.ipapi.org/?format=json", options);
                           const json = await res.json();
                           setData({ ip: json.ip, loc: "", isp: "" });
                       } else if(source.includes('v4') && !isCN) {
@@ -768,7 +812,7 @@ function renderHtml(initData, config) {
               {data.loc && data.loc !== t.checkNetwork && <span className="text-xs font-mono bg-slate-900 text-slate-500 px-1.5 py-0.5 rounded truncate max-w-[100px]">{data.loc}</span>}
             </div>
             <div className="flex items-center gap-2 cursor-pointer group">
-               <p className={"text-lg font-mono font-bold truncate transition-colors flex-grow " + (data.ip === "Failed" || data.ip === t.checkNetwork ? "text-red-500" : "text-white hover:text-cyan-400")}>{getDisplayIp(data.ip)}</p>
+               <p className={\`text-lg font-mono font-bold truncate transition-colors flex-grow \${data.ip === "Failed" || data.ip === t.checkNetwork ? "text-red-500" : "text-white hover:text-cyan-400"}\`}>{getDisplayIp(data.ip)}</p>
                <div className="flex gap-1">
                  {data.ip !== "Loading..." && data.ip !== "Failed" && (
                    <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsHidden(!isHidden); }} className="p-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors"><Icons.EyeOff className="w-3.5 h-3.5" /></button>
@@ -818,8 +862,8 @@ function renderHtml(initData, config) {
                 <span className="text-sm text-slate-300 font-medium">{label}</span>
              </div>
              <div className="flex items-center gap-2">
-               <span className={"text-xs font-mono " + (textColors[status] || "text-slate-400")}>{status === 'checking' ? t.checking : status === 'ok' ? ms + " " + t.ms : t.timeout}</span>
-               <div className={"w-2.5 h-2.5 rounded-full " + (colors[status] || "bg-slate-500") + (status === 'checking' ? " animate-pulse" : "")}></div>
+               <span className={\`text-xs font-mono \${textColors[status] || "text-slate-400"}\`}>{status === 'checking' ? t.checking : status === 'ok' ? ms + " " + t.ms : t.timeout}</span>
+               <div className={\`w-2.5 h-2.5 rounded-full \${colors[status] || "bg-slate-500"} \${status === 'checking' ? " animate-pulse" : ""}\`}></div>
              </div>
           </div>
         );
@@ -827,9 +871,12 @@ function renderHtml(initData, config) {
 
       const App = () => {
         const [data, setData] = useState(window.CF_DATA || null);
-        const [lang, setLang] = useState('cn');
+        const [lang, setLang] = useState('en');
         const [hostname, setHostname] = useState('Scanning...');
         const [riskData, setRiskData] = useState(null);
+        // 新增时间状态
+        const [times, setTimes] = useState({ local: "--:--:--", ip: "--:--:--" });
+        
         const t = TRANSLATIONS[lang];
         const isCN = data && data.country === "CN";
         const sysInfo = parseUA(data.userAgent);
@@ -841,29 +888,74 @@ function renderHtml(initData, config) {
                 setRiskData(json);
           }).catch(() => setHostname("N/A"));
         }, []);
+        
+        // 实时时钟 Effect
+        useEffect(() => {
+            const updateTime = () => {
+                const now = new Date();
+                // 本机时间
+                const local = now.toLocaleTimeString(lang === 'zh' ? 'zh-CN' : 'en-US', { hour12: false });
+                // IP 时间
+                let ipTimeStr = "--:--:--";
+                try {
+                    if (data && data.timezone) {
+                        ipTimeStr = now.toLocaleTimeString('en-US', { timeZone: data.timezone, hour12: false });
+                    }
+                } catch(e) {}
+                setTimes({ local, ip: ipTimeStr });
+            };
+            updateTime();
+            const timer = setInterval(updateTime, 1000);
+            return () => clearInterval(timer);
+        }, [data, lang]);
+        
+        // 报告导出功能
+        const handleCopyReport = () => {
+            if (!data) return;
+            const score = riskData ? calculateRiskScore(data, riskData) : "N/A";
+            const report = \`
+🔍 **IP Sentinel Report**
+-------------------------
+🌍 **IP:** \${data.ip}
+🏳️ **Loc:** \${data.city}, \${data.country}
+🏢 **ISP:** \${data.isp}
+🔢 **ASN:** \${data.asn}
+🚦 **Type:** \${riskData?.is_datacenter ? "Data Center 🏢" : "Residential 🏠"}
+🛡️ **Score:** \${score} / 100
+-------------------------
+Generated by https://t.me/wanouxuezhang
+\`.trim();
+            copyText(report, () => {
+                alert(t.copied);
+            });
+        };
 
         if (!data) return <div className="min-h-screen flex items-center justify-center text-cyan-500 font-mono animate-pulse">LOADING...</div>;
         
         return (
           <div className="min-h-screen pb-20 px-4 pt-6 md:pt-12 max-w-7xl mx-auto">
-            <header className="flex justify-between items-center mb-4">
+            <header className="flex items-center justify-between mb-6">
                <div className="flex items-center gap-3">
-                 <div className="bg-cyan-900/20 p-2 rounded-lg border border-cyan-500/30"><Icons.Shield className="w-6 h-6 text-cyan-400" /></div>
-                 <div>
-                   <h1 className="text-xl font-bold text-white tracking-tight">{t.title}</h1>
-                   <span className="text-xs text-cyan-500 font-medium px-1.5 py-0.5 bg-cyan-950 rounded border border-cyan-900">{t.owner}</span>
+                 <div className="bg-cyan-900/20 p-2 rounded-lg border border-cyan-500/30">
+                    <Icons.Shield className="w-6 h-6 md:w-8 md:h-8 text-cyan-400" />
+                 </div>
+                 <div className="flex flex-col justify-center">
+                   <h1 className="text-lg md:text-2xl font-bold text-white tracking-tight leading-tight">{t.title}</h1>
+                   <span className="text-[10px] md:text-xs text-cyan-500 font-medium px-1.5 py-0.5 bg-cyan-950 rounded border border-cyan-900 w-fit">{t.owner}</span>
                  </div>
                </div>
+
                <div className="flex items-center gap-2">
                  {window.SITE_CONFIG.githubRepo && (
-                  <a href={window.SITE_CONFIG.githubRepo} target="_blank" rel="noreferrer" className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs text-yellow-400 transition-colors">
+                  <a href={window.SITE_CONFIG.githubRepo} target="_blank" rel="noreferrer" className="flex items-center gap-1 md:gap-2 px-2 md:px-3 py-1 md:py-1.5 rounded-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-[10px] md:text-xs text-yellow-400 transition-colors">
                     <Icons.Github className="w-3 h-3" />
-                    <span>{t.starMe}</span>
+                    <span className="hidden sm:inline">{t.starMe}</span>
+                    <span className="sm:hidden">Star</span>
                   </a>
                  )}
-                 <button onClick={() => setLang(lang === 'zh' ? 'en' : 'zh')} className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs text-slate-300 transition-colors">
+                 <button onClick={() => setLang(lang === 'zh' ? 'en' : 'zh')} className="flex items-center gap-1 md:gap-2 px-2 md:px-3 py-1 md:py-1.5 rounded-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-[10px] md:text-xs text-slate-300 transition-colors">
                    <Icons.Globe className="w-3 h-3" />
-                   {lang === 'zh' ? 'English' : '中文'}
+                   <span>{lang === 'zh' ? 'English' : '中文'}</span>
                  </button>
                </div>
             </header>
@@ -916,8 +1008,32 @@ function renderHtml(initData, config) {
                     <WebRTCCard t={t} />
                  </div>
             </div>
+            
+            {/* === 移动到底部的：时间和报告导出栏 === */}
+            <div className="flex justify-center mt-8">
+                 <div className="flex items-center gap-3 bg-slate-800/40 border border-slate-700/50 rounded-lg p-1.5 backdrop-blur-md">
+                   {/* 本机时间 */}
+                   <div className="flex flex-col px-2 border-r border-slate-700/50">
+                       <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">{t.localTime}</span>
+                       <span className="text-sm font-mono font-bold text-white leading-none">{times.local}</span>
+                   </div>
+                   {/* IP 时间 */}
+                   <div className="flex flex-col px-2">
+                       <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">{t.ipTime}</span>
+                       <span className="text-sm font-mono font-bold text-neon-cyan leading-none">{times.ip}</span>
+                   </div>
+                   {/* 报告导出按钮 */}
+                   <button 
+                       onClick={handleCopyReport}
+                       className="ml-1 p-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-md transition-all shadow-lg shadow-cyan-900/20"
+                       title={t.report}
+                   >
+                       <Icons.Report className="w-4 h-4" />
+                   </button>
+                 </div>
+            </div>
 
-            <footer className="mt-16 text-center text-slate-600 text-sm flex flex-col items-center gap-4">
+            <footer className="mt-4 text-center text-slate-600 text-sm flex flex-col items-center gap-4">
                  <span>{t.footer}</span>
                  <div className="flex items-center gap-4">
                      <a href="https://github.com/wanouxuezhang" target="_blank" rel="noreferrer" className="text-slate-500 hover:text-slate-300 transition-colors transform hover:scale-110 duration-300"><Icons.Github className="w-6 h-6" /></a>
